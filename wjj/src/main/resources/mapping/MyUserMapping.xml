@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangchuanan.wjj.dao.MyUserMapper">
+
+    <select id="queryUserByUserName" resultType="com.wangchuanan.wjj.pojo.MyUser">
+        select id,userName,userPwd from new_user where userName=#{userName}
+    </select>
+
+    <select id="queryUserByUserId" resultType="com.wangchuanan.wjj.pojo.MyUser">
+        select id,userName,userPwd from new_user where id=#{id}
+    </select>
+
+    <insert id = "addUser">
+        insert into new_user(id,userName,userPwd)
+        values
+            (#{id},#{userName},#{userPwd})
+    </insert>
+
+    <update id ="updateUser">
+        update new_user
+            set
+            userName = #{userName},
+            userPwd = #{userPwd}
+            where id = #{id}
+    </update>
+
+    <delete id ="deleteUserById">
+        delete from new_user
+        where id = #{id}
+    </delete>
+
+
+    <select id="queryUserByParams" parameterType="com.wangchuanan.wjj.query.UserQuery" resultType="com.wangchuanan.wjj.pojo.MyUser">
+        select * from new_user
+        <where>
+            <if test="null != userName and ''!=userName">
+                and userName like concat('%',#{userName},'%')
+            </if>
+        </where>
+    </select>
+</mapper>
